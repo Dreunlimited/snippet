@@ -1,8 +1,8 @@
 //
-//  SourceClient.swift
+//  ArticleClient.swift
 //  snippet
 //
-//  Created by Dandre Ealy on 3/15/17.
+//  Created by Dandre Ealy on 3/16/17.
 //  Copyright © 2017 Dandre Ealy. All rights reserved.
 //
 
@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 import CoreData
 
-class SourceClient: NSObject {
+class ArticleClient: NSObject {
     lazy var session = URLSession.shared
-    static let sharedInstance = SourceClient()
+    static let sharedInstance = ArticleClient()
     
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
     
@@ -20,13 +20,14 @@ class SourceClient: NSObject {
         super.init()
     }
     
-    func fetchSources(completionHandler:@escaping (_ success: Bool, _ error: String?)->Void) {
+    func fetchArticles(_ source: Source,completionHandler:@escaping (_ success: Bool, _ error: String?)->Void) {
         
         let methodparameters = [
-            Constants.SourcesParameterValues.language:Constants.SourcesParameterValues.language
+            ArticleConstants.ArticleParameterKeys.apiKey:ArticleConstants.ArticleParameterValues.apiKey,
+            ArticleConstants.ArticleParameterKeys.source:source.id
         ]
         
-        let request = URLRequest(url: sourcesURLFromParameters(methodparameters as [String : AnyObject]))
+        let request = URLRequest(url: articlesURLFromParameters(methodparameters as [String : AnyObject]))
         
         let task = session.dataTask(with: request) { (data, response, error) in
             if error != nil {
@@ -34,28 +35,27 @@ class SourceClient: NSObject {
             } else {
                 if let results = try? JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String:AnyObject] {
                     
-                    if let sources = results?["sources"] as? [[String:AnyObject]] {
-                       
+                    if let articles = results?["articles"] as? [[String:AnyObject]] {
                         
-                        for source in sources {
-                            print("source \(source)")
-                            let id = source["id"] as! String
-                            let name = source["name"]  as! String
-                            let description = source["description"]  as! String
-                            let url = source["url"]  as! String
-                            let category = source["category"]  as! String
-                            let urlToLogos = source["urlsToLogos"] as! [String:AnyObject]
-                            let urlToLogo = urlToLogos["small"]  as! String
+                        
+                        for article in articles {
+                            let author = article["author"] as? String
+                            let title = article["title"]  as? String
+                            let description = article["description"]  as? String
+                            let url = article["url"]  as? String
+                            let urlToImage = article["urlToImage"]  as? String
+                            let publishedAt = article["publishedAt"]  as? String
                             
                             let managedContext = self.appDelegate?.persistentContainer.viewContext
-                            let sourceObject = Source(entity: Source.entity(), insertInto: managedContext)
+                            let articleObject = Article(entity: Article.entity(), insertInto: managedContext)
                             
-                            sourceObject.id = id
-                            sourceObject.name = name
-                            sourceObject.desc = description
-                            sourceObject.url = url
-                            sourceObject.category = category
-                            sourceObject.logoURL = urlToLogo
+                            articleObject.author = author
+                            articleObject.title = title
+                            articleObject.desc = description
+                            articleObject.url = url
+                            articleObject.urlToImage = urlToImage
+                            articleObject.publishedAt = publishedAt 
+                            articleObject.source = source
                             
                             completionHandler(true, nil)
                             
@@ -69,14 +69,14 @@ class SourceClient: NSObject {
                     }
                 }
             }
-           
+            
         }
         task.resume()
     }
     
-    func convertStringToImage(_ image: Source, completionHandler: @escaping(_ image: UIImage?, _ error: NSError?)-> Void)  {
+    func convertStringToImage(_ image: Article, completionHandler: @escaping(_ image: UIImage?, _ error: NSError?)-> Void)  {
         
-        let request = URLRequest(url: URL(string: image.logoURL!)!)
+        let request = URLRequest(url: URL(string: image.urlToImage!)!)
         
         let task = session.dataTask(with: request) { (data, response, error) in
             
@@ -107,13 +107,14 @@ class SourceClient: NSObject {
         task.resume()
     }
 }
-extension SourceClient{
-    public func sourcesURLFromParameters(_ parameters: [String:AnyObject]) -> URL {
+
+extension ArticleClient{
+    public func articlesURLFromParameters(_ parameters: [String:AnyObject]) -> URL {
         
         var components = URLComponents()
-        components.scheme = Constants.Sources.APIScheme
-        components.host = Constants.Sources.APIHost
-        components.path = Constants.Sources.APIPath
+        components.scheme = ArticleConstants.Articles.APIScheme
+        components.host = ArticleConstants.Articles.APIHost
+        components.path = ArticleConstants.Articles.APIPath
         components.queryItems = [URLQueryItem]()
         
         for (key, value) in parameters {

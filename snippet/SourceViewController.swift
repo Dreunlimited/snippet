@@ -9,56 +9,55 @@
 import UIKit
 import CoreData
 
-class SourceViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, NSFetchedResultsControllerDelegate {
+class SourceViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
     var fetchedResultsController:NSFetchedResultsController<Source>!
+
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
         fetchedResultsController?.delegate = self
-        fectchSources()
         collectionView.delegate = self
         collectionView.dataSource = self
+        fectchSources()
+        collectionView.reloadData()
+        print("results \(fetchedResultsController.fetchedObjects?.count)")
+        let userDefault = UserDefaults()
         
-        let sourceFetched = UserDefaults()
-
-        if sourceFetched.bool(forKey: "source") {
-            
+        if userDefault.bool(forKey: "sourcesFetched") {
         } else {
             SourceClient.sharedInstance.fetchSources { (sucess, error) in
                 if sucess {
-                    sourceFetched.set(true, forKey: "source")
+                    self.collectionView.reloadData()
+                    userDefault.set(true, forKey: "sourcesFetched")
                 } else {
                     
                 }
             }
-            
         }
-        
+
+
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-       
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        print("results \(fetchedResultsController.fetchedObjects?.count)")
     }
     
     
     func fectchSources() {
         
         let fetchRequest:NSFetchRequest<Source> = Source.fetchRequest()
-        
-        let sort = NSSortDescriptor(key: "image", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))
+        let sort = NSSortDescriptor(key: "id", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))
         fetchRequest.sortDescriptors = [sort]
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: (appDelegate?.persistentContainer.viewContext)!, sectionNameKeyPath: nil, cacheName: nil)
@@ -67,13 +66,13 @@ class SourceViewController: UIViewController, UICollectionViewDelegate, UICollec
             try fetchedResultsController.performFetch()
             self.collectionView.reloadData()
         } catch let error as NSError {
-            print("Error fecthing pins \(error.localizedDescription)")
+            print("Error fecthing sources \(error.localizedDescription)")
         }
     }
     
 }
 
-extension SourceViewController {
+extension SourceViewController: NSFetchedResultsControllerDelegate {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return  fetchedResultsController.sections?.count ?? 0
     }
@@ -126,4 +125,12 @@ extension SourceViewController {
         
         return cell!
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let articleVC = storyboard?.instantiateViewController(withIdentifier: "article") as! ArticleViewController
+        let source = fetchedResultsController.object(at: indexPath)
+        articleVC.source = source
+        self.present(articleVC, animated: true, completion: nil)
+    }
+    
 }

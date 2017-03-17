@@ -2,7 +2,7 @@
 //  Article+CoreDataProperties.swift
 //  snippet
 //
-//  Created by Dandre Ealy on 3/15/17.
+//  Created by Dandre Ealy on 3/16/17.
 //  Copyright © 2017 Dandre Ealy. All rights reserved.
 //
 
@@ -19,7 +19,7 @@ extension Article {
     @NSManaged public var author: String?
     @NSManaged public var desc: String?
     @NSManaged public var image: NSData?
-    @NSManaged public var publishedAt: NSDate?
+    @NSManaged public var publishedAt: String?
     @NSManaged public var title: String?
     @NSManaged public var url: String?
     @NSManaged public var urlToImage: String?
