@@ -112,7 +112,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="261"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="csB-d3-Rxh" id="Ktf-cf-8JA">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="260"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="260.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="am4-z0-YJI">
@@ -182,7 +182,6 @@
                                                 <constraint firstItem="5Bn-Br-MSG" firstAttribute="centerX" secondItem="Ktf-cf-8JA" secondAttribute="centerX" id="pvn-Vt-Z5Z"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.1215686275" green="0.71372549019999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="activity" destination="EAd-fh-Cdg" id="ngv-8t-kFU"/>
                                             <outlet property="author" destination="5Bn-Br-MSG" id="Oss-Pf-ogx"/>

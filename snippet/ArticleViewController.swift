@@ -33,9 +33,19 @@ class ArticleViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        performUIUpdatesOnMain {
+            self.source.deleteArticle((self.fetchedResultsController.managedObjectContext)) { _ in }
+        }
+        print("removed")
+        
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        fectchArticles()
         print("results \(fetchedResultsController.fetchedObjects?.count)")
     }
     
@@ -72,13 +82,11 @@ class ArticleViewController: UIViewController, UITableViewDelegate, UITableViewD
 extension ArticleViewController{
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return  fetchedResultsController.fetchedObjects?.count ?? 0
-        
+        return  fetchedResultsController.sections?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return  fetchedResultsController.sections?.count ?? 0
-        
+        return  fetchedResultsController.fetchedObjects?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -90,7 +98,7 @@ extension ArticleViewController{
             cell?.activity.startAnimating()
         }
         
-        if source.image != nil {
+        if article.image != nil {
             performUIUpdatesOnMain {
                 if let image =  UIImage(data: article.image as! Data) {
                     cell?.photo.image = image
@@ -107,7 +115,7 @@ extension ArticleViewController{
             }
             
         } else {
-            SourceClient.sharedInstance.convertStringToImage(source, completionHandler: { (image, error) in
+            ArticleClient.sharedInstance.convertStringToImage(article, completionHandler: { (image, error) in
                 if error != nil {
                     alert("\(error)", "Try Agin", self)
                 } else {
