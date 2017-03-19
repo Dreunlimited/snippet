@@ -8,45 +8,34 @@
 
 import UIKit
 import CoreData
+import SVProgressHUD
 
-class SourceViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+
+class SourceViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var searchBar: UISearchBar!
     var fetchedResultsController:NSFetchedResultsController<Source>!
 
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
-    
+    var searchResults = [AnyObject]()
+    var insearchMode = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        SVProgressHUD.dismiss()
         fetchedResultsController?.delegate = self
         collectionView.delegate = self
         collectionView.dataSource = self
+        navigationController?.navigationBar.isHidden = true 
         fectchSources()
-        collectionView.reloadData()
         print("results \(fetchedResultsController.fetchedObjects?.count)")
-        let userDefault = UserDefaults()
-        
-        if userDefault.bool(forKey: "sourcesFetched") {
-        } else {
-            SourceClient.sharedInstance.fetchSources { (sucess, error) in
-                if sucess {
-                    self.collectionView.reloadData()
-                    userDefault.set(true, forKey: "sourcesFetched")
-                } else {
-                    
-                }
-            }
-        }
-
-
-       
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        fectchSources()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -130,7 +119,9 @@ extension SourceViewController: NSFetchedResultsControllerDelegate {
         let articleVC = storyboard?.instantiateViewController(withIdentifier: "article") as! ArticleViewController
         let source = fetchedResultsController.object(at: indexPath)
         articleVC.source = source
+        articleVC.navigationItem.title = "Hello"
         self.present(articleVC, animated: true, completion: nil)
     }
+    
     
 }

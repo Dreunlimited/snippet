@@ -86,7 +86,8 @@ class ArticleClient: NSObject {
             } else {
                 
                 performUIUpdatesOnMain {
-                    let imageData = UIImage(data: data!)
+                    
+                    let imageData = UIImage(data: data!) ?? UIImage(named: "placehoder.png")
                     image.image = data as NSData?
                     
                     do {

@@ -57,7 +57,7 @@ class SourceClient: NSObject {
                             sourceObject.category = category
                             sourceObject.logoURL = urlToLogo
                             
-                            completionHandler(true, nil)
+                            
                             
                             do {
                                 try managedContext?.save()
@@ -65,7 +65,7 @@ class SourceClient: NSObject {
                                 print("Could not save \(error.userInfo)")
                             }
                         }
-                        
+                        completionHandler(true, nil)
                     }
                 }
             }

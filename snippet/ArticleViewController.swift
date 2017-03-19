@@ -8,6 +8,11 @@
 
 import UIKit
 import CoreData
+import SafariServices
+import ReachabilitySwift
+import SVProgressHUD
+
+
 
 class ArticleViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate {
     
@@ -15,22 +20,37 @@ class ArticleViewController: UIViewController, UITableViewDelegate, UITableViewD
     var fetchedResultsController:NSFetchedResultsController<Article>!
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
     var source:Source!
+    let reachability = Reachability()!
+
+    
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(ArticleViewController.handleRefresh(_:)), for: UIControlEvents.valueChanged)
+        
+        return refreshControl
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.addSubview(refreshControl)
         fetchedResultsController?.delegate = self
         fectchArticles()
         tableView.delegate = self
         tableView.dataSource = self
-        
-        ArticleClient.sharedInstance.fetchArticles(source) { (sucess, error) in
-            if sucess {
-              print("sucess")
-            }else {
-                print(error!)
+        if reachability.currentReachabilityStatus == .notReachable {
+            SVProgressHUD.showError(withStatus: "Network failure")
+        } else {
+            ArticleClient.sharedInstance.fetchArticles(source) { (sucess, error) in
+                if sucess {
+                    print("sucess")
+                }else {
+                    print(error!)
+                }
             }
+            
         }
-        
+      
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -39,8 +59,9 @@ class ArticleViewController: UIViewController, UITableViewDelegate, UITableViewD
         performUIUpdatesOnMain {
             self.source.deleteArticle((self.fetchedResultsController.managedObjectContext)) { _ in }
         }
-        print("removed")
         
+        handleRefresh(refreshControl)
+        tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -52,8 +73,8 @@ class ArticleViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableViewAutomaticDimension
+//        tableView.estimatedRowHeight = 100
+//        tableView.rowHeight = UITableViewAutomaticDimension
         
     }
     
@@ -76,6 +97,20 @@ class ArticleViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     @IBAction func backTouched(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    func handleRefresh(_ refreshControl: UIRefreshControl) {
+        
+        ArticleClient.sharedInstance.fetchArticles(source) { (sucess, error) in
+            if sucess {
+                print("sucess")
+                self.fectchArticles()
+            }else {
+                print(error!)
+            }
+        }
+        
+        refreshControl.endRefreshing()
     }
 }
 
@@ -139,5 +174,23 @@ extension ArticleViewController{
         
         
         return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let article = fetchedResultsController.object(at: indexPath)
+        tableView.deselectRow(at: indexPath, animated: true)
+        if let url = URL(string: article.url!) {
+            if url.scheme == nil {
+                let newUrlString = "http://\(url)"
+                let newURL = URL(string: newUrlString)
+                let vc = SFSafariViewController(url: newURL!, entersReaderIfAvailable: true)
+                present(vc, animated: true, completion: nil)
+            } else {
+                let vc = SFSafariViewController(url: url, entersReaderIfAvailable: true)
+                present(vc, animated: true, completion: nil)
+                
+            }
+        }
+
     }
 }
