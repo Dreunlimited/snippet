@@ -5,7 +5,6 @@
 //  Created by Dandre Ealy on 3/16/17.
 //  Copyright © 2017 Dandre Ealy. All rights reserved.
 //
-
 import UIKit
 import CoreData
 import SafariServices
@@ -22,7 +21,7 @@ class ArticleViewController: UIViewController, UITableViewDelegate, UITableViewD
     var source:Source!
     let reachability = Reachability()!
     
-
+    
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -43,21 +42,20 @@ class ArticleViewController: UIViewController, UITableViewDelegate, UITableViewD
         if reachability.currentReachabilityStatus == .notReachable {
             SVProgressHUD.showError(withStatus: "Network failure")
         } else {
-            if userDefault.bool(forKey: "articleFetched") {
-                
-            } else {
+            performUIUpdatesOnMain {
+                self.source.deleteArticle((self.fetchedResultsController.managedObjectContext)) { _ in }
+            }
                 ArticleClient.sharedInstance.fetchArticles(source) { (sucess, error) in
                     if sucess {
+                        print("yes")
                         userDefault.set(true, forKey: "articleFetched")
                     }else {
                         print(error!)
                     }
                 }
-            }
-           
             
         }
-      
+        
     }
     
     
@@ -70,8 +68,7 @@ class ArticleViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        tableView.estimatedRowHeight = 100
-//        tableView.rowHeight = UITableViewAutomaticDimension
+        fectchArticles()
         
     }
     
@@ -170,7 +167,7 @@ extension ArticleViewController{
                 }
             })
         }
-
+        
         
         
         return cell!
@@ -191,6 +188,6 @@ extension ArticleViewController{
                 
             }
         }
-
+        
     }
 }

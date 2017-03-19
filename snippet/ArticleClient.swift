@@ -60,7 +60,6 @@ class ArticleClient: NSObject {
                             articleObject.publishedAt = publishedAt 
                             articleObject.source = source
                             
-                            completionHandler(true, nil)
                             
                             do {
                                 try managedContext?.save()
@@ -68,7 +67,8 @@ class ArticleClient: NSObject {
                                 print("Could not save \(error.userInfo)")
                             }
                         }
-                        
+                        completionHandler(true, nil)
+
                     }
                 }
             }
