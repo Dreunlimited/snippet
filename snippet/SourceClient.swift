@@ -111,9 +111,9 @@ extension SourceClient{
     public func sourcesURLFromParameters(_ parameters: [String:AnyObject]) -> URL {
         
         var components = URLComponents()
-        components.scheme = Constants.Sources.APIScheme
-        components.host = Constants.Sources.APIHost
-        components.path = Constants.Sources.APIPath
+        components.scheme = Constants.Sources.apiScheme
+        components.host = Constants.Sources.apiHost
+        components.path = Constants.Sources.apiPath
         components.queryItems = [URLQueryItem]()
         
         for (key, value) in parameters {

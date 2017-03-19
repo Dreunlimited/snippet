@@ -12,9 +12,9 @@ struct Constants {
     
     
     struct Sources {
-        static let APIScheme = "https"
-        static let APIHost = "newsapi.org"
-        static let APIPath = "/v1/sources"
+        static let apiScheme = "https"
+        static let apiHost = "newsapi.org"
+        static let apiPath = "/v1/sources"
     }
     
     struct SourcesParameterKeys  {

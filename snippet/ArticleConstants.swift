@@ -12,9 +12,9 @@ struct ArticleConstants {
     
     
     struct Articles {
-        static let APIScheme = "https"
-        static let APIHost = "newsapi.org"
-        static let APIPath = "/v1/articles"
+        static let apiScheme = "https"
+        static let apiHost = "newsapi.org"
+        static let apiPath = "/v1/articles"
     }
     
     struct ArticleParameterKeys  {

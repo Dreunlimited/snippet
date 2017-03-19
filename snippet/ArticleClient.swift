@@ -116,9 +116,9 @@ extension ArticleClient{
     public func articlesURLFromParameters(_ parameters: [String:AnyObject]) -> URL {
         
         var components = URLComponents()
-        components.scheme = ArticleConstants.Articles.APIScheme
-        components.host = ArticleConstants.Articles.APIHost
-        components.path = ArticleConstants.Articles.APIPath
+        components.scheme = ArticleConstants.Articles.apiScheme
+        components.host = ArticleConstants.Articles.apiHost
+        components.path = ArticleConstants.Articles.apiPath
         components.queryItems = [URLQueryItem]()
         
         for (key, value) in parameters {
