@@ -21,6 +21,7 @@ class ArticleViewController: UIViewController, UITableViewDelegate, UITableViewD
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
     var source:Source!
     let reachability = Reachability()!
+    
 
     
     lazy var refreshControl: UIRefreshControl = {
@@ -38,31 +39,27 @@ class ArticleViewController: UIViewController, UITableViewDelegate, UITableViewD
         fectchArticles()
         tableView.delegate = self
         tableView.dataSource = self
+        let userDefault = UserDefaults()
         if reachability.currentReachabilityStatus == .notReachable {
             SVProgressHUD.showError(withStatus: "Network failure")
         } else {
-            ArticleClient.sharedInstance.fetchArticles(source) { (sucess, error) in
-                if sucess {
-                    print("sucess")
-                }else {
-                    print(error!)
+            if userDefault.bool(forKey: "articleFetched") {
+                
+            } else {
+                ArticleClient.sharedInstance.fetchArticles(source) { (sucess, error) in
+                    if sucess {
+                        userDefault.set(true, forKey: "articleFetched")
+                    }else {
+                        print(error!)
+                    }
                 }
             }
+           
             
         }
       
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        performUIUpdatesOnMain {
-            self.source.deleteArticle((self.fetchedResultsController.managedObjectContext)) { _ in }
-        }
-        
-        handleRefresh(refreshControl)
-        tableView.reloadData()
-    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -100,6 +97,9 @@ class ArticleViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func handleRefresh(_ refreshControl: UIRefreshControl) {
+        performUIUpdatesOnMain {
+            self.source.deleteArticle((self.fetchedResultsController.managedObjectContext)) { _ in }
+        }
         
         ArticleClient.sharedInstance.fetchArticles(source) { (sucess, error) in
             if sucess {

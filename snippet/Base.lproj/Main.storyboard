@@ -85,9 +85,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Cd6-VF-AYY">
-                                <rect key="frame" x="0.0" y="71" width="375" height="596"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Cd6-VF-AYY">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="YJs-8V-KXp">
                                     <size key="itemSize" width="180" height="160"/>
@@ -143,25 +142,18 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Bbw-e3-dRE">
-                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="Wi8-pn-ica"/>
-                                    <constraint firstAttribute="width" constant="375" id="rb3-qx-v3w"/>
-                                </constraints>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Bbw-e3-dRE" firstAttribute="centerX" secondItem="cSR-cR-c9M" secondAttribute="centerX" id="4H4-hC-nr8"/>
-                            <constraint firstItem="Bbw-e3-dRE" firstAttribute="top" secondItem="sDo-Fe-KhQ" secondAttribute="bottom" constant="8" id="aEF-ey-sMH"/>
+                            <constraint firstItem="WVb-69-po2" firstAttribute="top" secondItem="Cd6-VF-AYY" secondAttribute="bottom" id="F4t-Pe-HZf"/>
+                            <constraint firstAttribute="trailing" secondItem="Cd6-VF-AYY" secondAttribute="trailing" id="ON6-uR-A7x"/>
+                            <constraint firstItem="Cd6-VF-AYY" firstAttribute="leading" secondItem="cSR-cR-c9M" secondAttribute="leading" id="RJY-n7-TG1"/>
+                            <constraint firstItem="Cd6-VF-AYY" firstAttribute="top" secondItem="sDo-Fe-KhQ" secondAttribute="bottom" id="h9T-jr-acR"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="s8e-Zn-ruw"/>
                     <connections>
                         <outlet property="collectionView" destination="Cd6-VF-AYY" id="9Nh-RA-xDc"/>
-                        <outlet property="searchBar" destination="Bbw-e3-dRE" id="sJB-iw-kK6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N9S-c5-2YA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -191,7 +183,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="311.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VPX-zo-wKI">
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VPX-zo-wKI">
                                                     <rect key="frame" x="8" y="57" width="359" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="OK9-xP-i0T"/>

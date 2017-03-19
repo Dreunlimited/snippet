@@ -43,7 +43,10 @@ class ArticleClient: NSObject {
                             let title = article["title"]  as? String
                             let description = article["description"]  as? String
                             let url = article["url"]  as? String
-                            let urlToImage = article["urlToImage"]  as? String
+                            var urlToImage = article["urlToImage"]  as? String
+                            if urlToImage == nil {
+                                urlToImage = "https://newsapi.org/images/newsapi-logo.png"
+                            }
                             let publishedAt = article["publishedAt"]  as? String
                             
                             let managedContext = self.appDelegate?.persistentContainer.viewContext
