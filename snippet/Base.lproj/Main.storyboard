@@ -71,7 +71,7 @@
                     <navigationItem key="navigationItem" id="eY4-C0-gqR"/>
                     <connections>
                         <outlet property="discover" destination="Okr-Ke-mXx" id="hIh-vd-kV0"/>
-                        <segue destination="Fwf-1A-GCr" kind="show" identifier="showSources" id="qqX-Jp-ZRm"/>
+                        <segue destination="IY6-42-n8T" kind="show" identifier="showSources" id="qqX-Jp-ZRm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fEH-eG-VU7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -91,7 +91,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Cd6-VF-AYY">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="46" width="375" height="572"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="YJs-8V-KXp">
                                     <size key="itemSize" width="180" height="160"/>
@@ -153,7 +153,7 @@
                             <constraint firstItem="WVb-69-po2" firstAttribute="top" secondItem="Cd6-VF-AYY" secondAttribute="bottom" id="F4t-Pe-HZf"/>
                             <constraint firstAttribute="trailing" secondItem="Cd6-VF-AYY" secondAttribute="trailing" id="ON6-uR-A7x"/>
                             <constraint firstItem="Cd6-VF-AYY" firstAttribute="leading" secondItem="cSR-cR-c9M" secondAttribute="leading" id="RJY-n7-TG1"/>
-                            <constraint firstItem="Cd6-VF-AYY" firstAttribute="top" secondItem="sDo-Fe-KhQ" secondAttribute="bottom" constant="-64" id="h9T-jr-acR"/>
+                            <constraint firstItem="Cd6-VF-AYY" firstAttribute="top" secondItem="sDo-Fe-KhQ" secondAttribute="bottom" constant="-18" id="h9T-jr-acR"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="s8e-Zn-ruw"/>
@@ -163,7 +163,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N9S-c5-2YA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1576.8" y="359.37031484257875"/>
+            <point key="canvasLocation" x="2516" y="359.37031484257875"/>
         </scene>
         <!--Article View Controller-->
         <scene sceneID="3Ta-ul-nM2">
@@ -285,7 +285,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dQv-UU-mwa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2320.8000000000002" y="368.36581709145429"/>
+            <point key="canvasLocation" x="3260" y="368.36581709145429"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vlw-Qf-JaY">
@@ -304,6 +304,43 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zKA-re-bg2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-74.400000000000006" y="358.4707646176912"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="6Fo-ma-L7K">
+            <objects>
+                <tabBarController storyboardIdentifier="tabController" automaticallyAdjustsScrollViewInsets="NO" id="IY6-42-n8T" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="pjY-Vh-REU">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="Fwf-1A-GCr" kind="relationship" relationship="viewControllers" id="lv1-7w-RES"/>
+                        <segue destination="82B-hA-a2W" kind="relationship" relationship="viewControllers" id="NpB-AD-o27"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k0b-vd-jb4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1576.8" y="359.37031484257875"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="f9b-E1-xl9">
+            <objects>
+                <viewController id="82B-hA-a2W" customClass="SaveViewController" customModule="snippet" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fMy-2z-LmF"/>
+                        <viewControllerLayoutGuide type="bottom" id="AVa-R8-xcr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xLx-RK-2LR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="mmV-J7-3zx"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="92S-Ra-uuO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2148" y="1093"/>
         </scene>
     </scenes>
 </document>

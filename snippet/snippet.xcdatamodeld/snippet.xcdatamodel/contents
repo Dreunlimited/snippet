@@ -5,6 +5,7 @@
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="publishedAt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="save" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="urlToImage" optional="YES" attributeType="String" syncable="YES"/>
@@ -21,7 +22,7 @@
         <relationship name="artical" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Article" inverseName="source" inverseEntity="Article" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Article" positionX="-54" positionY="45" width="128" height="165"/>
+        <element name="Article" positionX="-54" positionY="45" width="128" height="180"/>
         <element name="Source" positionX="-63" positionY="-18" width="128" height="165"/>
     </elements>
 </model>

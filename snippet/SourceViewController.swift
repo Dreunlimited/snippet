@@ -59,6 +59,10 @@ class SourceViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
     
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
 }
 
 extension SourceViewController: NSFetchedResultsControllerDelegate {
